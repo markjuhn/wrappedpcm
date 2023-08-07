@@ -15,7 +15,7 @@ library(devtools)
 
 install_github("markjuhn/wrappedpcm")
 
-load_all()
+library(wrappedpcm)
 
 ##### Run examples
 
