@@ -1,6 +1,6 @@
 Package: wrappedpcm
 Type: Package
-Title: wrappedpcm
+Title: Wrapped Phylogentic Comparative Methods Functions
 Version: 0.1.0
 Author: Mark Juhn, Florian Boucher
 Maintainer: Mark Juhn <markjuhn@ucla.edu>
