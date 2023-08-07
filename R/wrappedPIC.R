@@ -10,6 +10,11 @@
 #'
 #' @author Mark Juhn
 #' @import ape
+#' @examples
+#' tree = ape::rcoal(10)
+#' trait = runif(n = 10, min = 0, max = 1)
+#' names(trait) = tree$tip.label
+#' wrappedASE(trait = trait, phy = tree, lower_bound = 0, upper_bound = 1)
 wrappedPIC = function(trait, phy, lower_bound, upper_bound, return_ASE = F){
   # NOTE TRAITS NEED TO BE LABELED
   if (is.null(names(trait)) == TRUE){
