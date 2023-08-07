@@ -10,8 +10,8 @@
 #'
 #' @author Florian Boucher
 DiffMat_forward_circular_trait=function (V){
-  # V is a vector representing the potential, with 'Npts' numeric values
-  #'Npts+1'=0 on the circle: it is where it binds
+  # V is a vector representing the potential, with Npts numeric values
+  #Npts+1=0 on the circle: it is where it binds
   V2=c(V[length(V)],V,V[1]) # added two points: the value in position 'Npts' to the left, and the value in position 1 to the right
   Npts=length(V2)
   M=matrix(0,Npts,Npts)
@@ -37,9 +37,9 @@ DiffMat_forward_circular_trait=function (V){
 # Create and diagonalize the transition matrix that has been discretized
 # returns: the transition matrix going backwards in time, used for inference
 DiffMat_backwards_circular_trait=function (V){
-  # V is a vector representing the potential, with 'Npts' numeric values
-  #'Npts+1'=0 on the circle: it is where it binds
-  V2=c(V[length(V)],V,V[1]) # added two points: the value in position 'Npts' to the left, and the value in position 1 to the right
+  # V is a vector representing the potential, with Npts numeric values
+  # Npts+1=0 on the circle: it is where it binds
+  V2=c(V[length(V)],V,V[1]) # added two points: the value in position Npts to the left, and the value in position 1 to the right
   Npts=length(V2)
   M=matrix(0,Npts,Npts)
   for (i in 2:(Npts-1)){
