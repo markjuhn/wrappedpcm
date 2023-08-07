@@ -6,7 +6,7 @@
 #' @param phy phylogenetic tree of class phylo
 #' @param lower_bound lower bound for trait in circular space
 #' @param upper_bound upper bound for trait in circular space
-#'
+#' @export
 #' @author Mark Juhn
 #' @import ape
 #' @examples

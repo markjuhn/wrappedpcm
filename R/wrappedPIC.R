@@ -7,7 +7,7 @@
 #' @param lower_bound lower bound for trait in circular space
 #' @param upper_bound upper bound for trait in circular space
 #' @param return_ASE logical, if TRUE, the tip values and ancestral state estimations are returned along with the wrapped phylogenetically independent contrasts
-#'
+#' @export
 #' @author Mark Juhn
 #' @import ape
 #' @examples

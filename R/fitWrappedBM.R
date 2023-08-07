@@ -5,7 +5,7 @@
 #' @param phy a phylogenetic tree of class phylo
 #' @param trait data vector for a single trait, with names matching tips in phy
 #' @param bounds range defining bounds of circular space
-#'
+#' @export
 #' @author Florian Boucher and Mark Juhn
 #' @examples
 #' tree = ape::rcoal(10)

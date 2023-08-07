@@ -28,6 +28,7 @@
 
 #################################################
 # BBMV: the model with bounds defined by the user
+#' @export
 lnL_BBMV_circular_trait=function(tree,trait,bounds,a=NULL,b=NULL,c=NULL,Npts){
   # extremely careful now: Npts is the number of distinct points on the circle: whe we bind both edges
   if (sum(tree$tip.label%in%names(trait))<max(length(trait),length(tree$tip.label))){stop('Tip names in tree do not match names of the trait vector')}
@@ -57,6 +58,7 @@ lnL_BBMV_circular_trait=function(tree,trait,bounds,a=NULL,b=NULL,c=NULL,Npts){
 
 #############################################################
 # function to fit the models prepared by lnL_FPK and lnL_BBMV
+#' @export
 find.mle_FPK_circular_trait=function(model,method='Nelder-Mead',init.optim=NULL,safe=F){
   if (model$ncoeff==0){print('Please ignore the warning message below: it is sent automatically by the optim function but your optimization will most likely work well: it is an easy numerical problem with only one parameter.')}
   else {}

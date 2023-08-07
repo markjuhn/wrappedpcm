@@ -4,6 +4,7 @@
 # Written by Florian Boucher
 # Create and diagonalize the transition matrix that has been discretized
 # returns: the transition matrix going forward in time, for simulating traits only
+#' @export
 DiffMat_forward_circular_trait=function (V){
   # V is a vector representing the potential, with Npts numeric values
   # Npts+1=0 on the circle: it is where it binds
@@ -31,6 +32,7 @@ DiffMat_forward_circular_trait=function (V){
 
 # Create and diagonalize the transition matrix that has been discretized
 # returns: the transition matrix going backwards in time, used for inference
+#' @export
 DiffMat_backwards_circular_trait=function (V){
   # V is a vector representing the potential, with Npts numeric values
   # Npts+1=0 on the circle: it is where it binds
@@ -58,6 +60,7 @@ DiffMat_backwards_circular_trait=function (V){
   }
 
 # write to which point of the grid a given position belongs to, 'continuous' version
+#' @export
 VectorPos_bounds_circular_trait=function(x,V,bounds){
   Npts=length(V)
   if (length(x)==1){ # only one value per tip
@@ -95,6 +98,7 @@ VectorPos_bounds_circular_trait=function(x,V,bounds){
   }
 
 # Prepare the matrix diagonal
+#' @export
 prep_mat_exp=function(dCoeff,dMat,bounds){
   vDiag=dMat$diag ; P=dMat$passage ; tP=solve(P,tol = 1e-30) #; tP=t(P)
   Npts=dim(dMat$diag)[1]
@@ -104,6 +108,7 @@ prep_mat_exp=function(dCoeff,dMat,bounds){
 }
 
 # Convolution product over one branch
+#' @export
 ConvProp_bounds=function(X,t,prep_mat){
   Npts=length(X)
   expD=matrix(0,Npts,Npts)
@@ -114,6 +119,7 @@ ConvProp_bounds=function(X,t,prep_mat){
 
 # format tree and trait --> the tree is ordered from tips to root, with edge.length binded to the topology
 # A list is also initiated, filled with the position (probabilistic) of each tip and 1 for internal nodes.
+#' @export
 FormatTree_bounds_circular_trait=function(tree,trait,V,bounds){
   tree=reorder.phylo(tree,'postorder')
   ntips=length(tree$tip.label)
@@ -133,6 +139,7 @@ FormatTree_bounds_circular_trait=function(tree,trait,V,bounds){
 
 ############################
 # calculate log-likelihood over the whole tree, to be maximized
+#' @export
 LogLik_bounds=function(tree_formatted,dCoeff,dMat,bounds){
   #tree_formatted obtained through FormatTree ; dCoeff=log(sigsq/2)
   Npts=dim(dMat$diag)[1]
