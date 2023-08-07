@@ -7,7 +7,6 @@
 #' @param bounds range defining bounds of circular space
 #'
 #' @author Florian Boucher and Mark Juhn
-#' @import BBMV
 #' @examples
 #' tree = ape::rcoal(10)
 #' trait = runif(n = 10, min = 0, max = 1)
