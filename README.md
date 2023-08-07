@@ -28,9 +28,12 @@ names(trait) = tree$tip.label
 
 wrappedASE(trait = trait, phy = tree, lower_bound = 0, upper_bound = 1)
 
+
 wrappedPIC(trait = trait, phy = tree, lower_bound = 0, upper_bound = 1)
 
+
 fitWrappedBM(trait = trait, phy = tree, bounds = c(0, 1))
+
 
 ###### To delete package
 
