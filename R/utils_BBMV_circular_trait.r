@@ -3,8 +3,14 @@
 ###############################################################################
 # Create and diagonalize the transition matrix that has been discretized
 # returns: the transition matrix going forward in time, for simulating traits only
+
+#' Auxilary Functions
+#'
+#' Set of Auxiliary Functions used to fit the models
+#'
+#' @author Florian Boucher
 DiffMat_forward_circular_trait=function (V){
-  # V is a vector representing the potential, with 'Npts' numeric values 
+  # V is a vector representing the potential, with 'Npts' numeric values
   #'Npts+1'=0 on the circle: it is where it binds
   V2=c(V[length(V)],V,V[1]) # added two points: the value in position 'Npts' to the left, and the value in position 1 to the right
   Npts=length(V2)
@@ -26,7 +32,7 @@ DiffMat_forward_circular_trait=function (V){
   passage=matrix(NA,dim(eig$vectors)[1],dim(eig$vectors)[2])
   for (col in 1:dim(eig$vectors)[2]){passage[,col]=Re(eig$vectors[,col])}
   return(list(Diff=M,diag=diag(Re(eig$values)),passage=passage))
-}  
+}
 
 # Create and diagonalize the transition matrix that has been discretized
 # returns: the transition matrix going backwards in time, used for inference
@@ -54,13 +60,13 @@ DiffMat_backwards_circular_trait=function (V){
   passage=matrix(NA,dim(eig$vectors)[1],dim(eig$vectors)[2])
   for (col in 1:dim(eig$vectors)[2]){passage[,col]=Re(eig$vectors[,col])}
   return(list(Diff=M,diag=diag(Re(eig$values)),passage=passage))
-  }  
+  }
 
 # write to which point of the grid a given position belongs to, 'continuous' version
 VectorPos_bounds_circular_trait=function(x,V,bounds){
   Npts=length(V)
   if (length(x)==1){ # only one value per tip
-    X=rep(0,Npts)  
+    X=rep(0,Npts)
     if (x==bounds[2]){X[1]=1}
     else {
       #nx=(Npts-1)*(x-bounds[1])/(bounds[2]-bounds[1])
@@ -70,7 +76,7 @@ VectorPos_bounds_circular_trait=function(x,V,bounds){
       if (ix==(Npts-1)){X[1]=ux}
       else{ X[ix+2]=ux}
       X[ix+1]=1-ux
-    }	
+    }
   }
   else {
     # here we treat the case in which we do not have a single value but a vector of values measured
@@ -84,13 +90,13 @@ VectorPos_bounds_circular_trait=function(x,V,bounds){
         ux=nx-ix
         MAT[i,ix+2]=ux
         MAT[i,ix+1]=1-ux
-      }	
+      }
     }
     X=apply(MAT,2,mean) # and average them
   }
 #  return(X*(Npts-1)/(bounds[2]-bounds[1]))
   return(X*(Npts)/(bounds[2]-bounds[1]))
-  
+
   }
 
 # Prepare the matrix diagonal

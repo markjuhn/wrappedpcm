@@ -12,12 +12,12 @@
 #   ncoeff=(is.null(a)==T)+(is.null(b)==T)+(is.null(c)==T)
 #   if (is.null(a)==F){
 #     if (is.null(b)==F){
-#       # all three shape parameters fixed (e.g. flat landscape if a=b=c=0)  
+#       # all three shape parameters fixed (e.g. flat landscape if a=b=c=0)
 #       if (is.null(c)==F){fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+b*SEQ^2+c*SEQ),bounds=bounds))}}
-#       # only c varies (e.g. flat landscape if a=b=0)  
+#       # only c varies (e.g. flat landscape if a=b=0)
 #       else {fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+b*SEQ^2+X[2]*SEQ),bounds=bounds))}}
 #     }
-#     # a is fixed (e.g. quadratic landscape if a=0)  
+#     # a is fixed (e.g. quadratic landscape if a=0)
 #     else {fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+X[2]*SEQ^2+X[3]*SEQ),bounds=bounds))}}
 #   }
 #   # the full model: no parameter fixed
@@ -27,11 +27,17 @@
 
 #################################################
 # BBMV: the model with bounds defined by the user
+
+#' Log Likelihood of Circular Trait
+#'
+#' Calculates log likelihood of circular trait
+#'
+#' @author Florian Boucher
 lnL_BBMV_circular_trait=function(tree,trait,bounds,a=NULL,b=NULL,c=NULL,Npts){
   # extremely careful now: Npts is the number of distinct points on the circle: whe we bind both edges
   if (sum(tree$tip.label%in%names(trait))<max(length(trait),length(tree$tip.label))){stop('Tip names in tree do not match names of the trait vector')}
   if (is.numeric(trait)){
-    if ((min(trait)<bounds[1])|(max(trait)>bounds[2])){stop('Some values in the trait vector exceed the bounds.')} 
+    if ((min(trait)<bounds[1])|(max(trait)>bounds[2])){stop('Some values in the trait vector exceed the bounds.')}
   }
   if (class(trait)=='list') {
     if ((min(unlist(trait))<bounds[1])|(max(unlist(trait))>bounds[2])){stop('Some values in the trait data exceed the bounds.')}
@@ -41,12 +47,12 @@ lnL_BBMV_circular_trait=function(tree,trait,bounds,a=NULL,b=NULL,c=NULL,Npts){
   ncoeff=(is.null(a)==T)+(is.null(b)==T)+(is.null(c)==T)
   if (is.null(a)==F){
     if (is.null(b)==F){
-      # all three shape parameters fixed (e.g. flat landscape if a=b=c=0)  
+      # all three shape parameters fixed (e.g. flat landscape if a=b=c=0)
       if (is.null(c)==F){fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+b*SEQ^2+c*SEQ),bounds=bounds))}}
-      # only c varies (e.g. flat landscape if a=b=0)  
+      # only c varies (e.g. flat landscape if a=b=0)
       else {fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+b*SEQ^2+X[2]*SEQ),bounds=bounds))}}
     }
-    # a is fixed (e.g. quadratic landscape if a=0)  
+    # a is fixed (e.g. quadratic landscape if a=0)
     else {fun=function(X){return(-LogLik_bounds(tree_formatted=tree_formatted,dCoeff=X[1],dMat=DiffMat_backwards_circular_trait(a*SEQ^4+X[2]*SEQ^2+X[3]*SEQ),bounds=bounds))}}
   }
   # the full model: no parameter fixed
@@ -56,6 +62,12 @@ lnL_BBMV_circular_trait=function(tree,trait,bounds,a=NULL,b=NULL,c=NULL,Npts){
 
 #############################################################
 # function to fit the models prepared by lnL_FPK and lnL_BBMV
+
+#' Find MLE for Circular Trait
+#'
+#' function to fit the models prepared by lnL_FPK and lnL_BBMV
+#'
+#' @author Florian Boucher
 find.mle_FPK_circular_trait=function(model,method='Nelder-Mead',init.optim=NULL,safe=F){
   if (model$ncoeff==0){print('Please ignore the warning message below: it is sent automatically by the optim function but your optimization will most likely work well: it is an easy numerical problem with only one parameter.')}
   else {}
@@ -110,5 +122,5 @@ find.mle_FPK_circular_trait=function(model,method='Nelder-Mead',init.optim=NULL,
     logFactor=logFactor+log(norm)
   }
   ll_root$density =tree_formatted2$Pos[[tree_formatted2$tab[i,1]]]
-  return(res=list(lnL=-opt$value,aic=2*(length(init.optim)+opt$value),k=length(init.optim),par=par,par_fixed=par_fixed,root=ll_root,convergence=opt$convergence,message=opt$message,tree=tree,trait=trait,Npts=Npts)) 
+  return(res=list(lnL=-opt$value,aic=2*(length(init.optim)+opt$value),k=length(init.optim),par=par,par_fixed=par_fixed,root=ll_root,convergence=opt$convergence,message=opt$message,tree=tree,trait=trait,Npts=Npts))
 }
