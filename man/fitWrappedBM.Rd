@@ -16,6 +16,12 @@ fitWrappedBM(phy, trait, bounds)
 \description{
 Fitting wrapped Brownian Motion model to phylogenetic trees
 }
+\examples{
+tree = ape::rcoal(10)
+trait = runif(n = 10, min = 0, max = 1)
+names(trait) = tree$tip.label
+fitWrappedBM(phy = tree, trait = trait, bounds = c(0, 1))
+}
 \author{
 Florian Boucher and Mark Juhn
 }

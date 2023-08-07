@@ -18,6 +18,12 @@ wrappedASE(trait, phy, lower_bound, upper_bound)
 \description{
 Estimates ancestral states using wrapped phylogenetic independent contrasts
 }
+\examples{
+tree = ape::rcoal(10)
+trait = runif(n = 10, min = 0, max = 1)
+names(trait) = tree$tip.label
+wrappedASE(trait = trait, phy = tree, lower_bound = 0, upper_bound = 1)
+}
 \author{
 Mark Juhn
 }
