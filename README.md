@@ -1,6 +1,8 @@
 # wrappedpcm
 Package wrappedpcm
 
+Written by Mark Juhn and Florian Boucher
+
 A series of functions to allow for phylogenetic comparative methods on circular data
 
 wrappedPIC (Wrapped Phylogenetically Independent Contrasts) is a modified version of Phylogenetically Independent Contrasts, but in circular space.
