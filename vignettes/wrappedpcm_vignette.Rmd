@@ -9,22 +9,93 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Getting Started
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+The wrappedpcm package will allow you to perform a variety of phylogenetic comparative methods on wrapped or circular data. 
+Circular data is measured on a circle, typically in degrees or radians. Due to its periodic nature (e.g. 0 degrees = 360 degrees), circular data differs from more common linear data. However, many biologically relevant traits exhibit circular behavior including turning angles in animal movement, branching angles in the spread of clonal plants and seed dispersal angles. Additionally, traits relating to phenology such as bud break, fruit abscission and leaf abscission events also exhibit circularity. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This R package allows for the implementation of key phylogenetic comparative methods on such traits.
 
-```{r cars}
-summary(cars)
+Before getting started, you will need to install the wrappedpmc package. Since the package is currently on github, we will need to use the devtools package to install it.
+
+```{r, eval = FALSE}
+library(devtools)
+
+install_github("markjuhn/wrappedpcm")
+
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+library(wrappedpcm)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+For this vignette, we will also use the ape and geiger packages.
+
+```{r}
+library(ape)
+library(geiger)
+```
+
+## Functions in wrappedpmc
+
+There are three functions in wrappedpmc: wrappedPIC, wrappedASE, and fitWrappedBM. 
+
+wrappedPIC (Wrapped Phylogenetically Independent Contrasts) is a modified version of Phylogenetically Independent Contrasts, but in circular space.
+
+wrappedASE (Wrapped Ancestral State Estimation) is a modified version of Ancestral State Estimation in circular space.
+
+fitWrappedBM (Fit Wrapped Brownian Motion) allows one to fit a wrapped Brownian Motion model to circular data.
+
+In this vignette, we will provide an example for each function.
+
+First we simulate a tree and trait. The trait will be circular, with values ranging from 0 to 1.
+
+```{r}
+setseed(3)
+tree = geiger::sim.bdtree(b = 1, d = 0, stop = "taxa", n = 20)
+trait = round(runif(n = 20, min = 0, max = 1), 2)
+names(trait) = tree$tip.label
+```
+
+The wrappedPIC function is a wrapped modification of the pic function in ape. Here, we must also provide a lower and upper bound value.
+
+```{r}
+wrapped_PIC_values = wrappedPIC(trait = trait, 
+           phy = tree,
+           lower_bound = 0,
+           upper_bound = 1)
+PIC_values = ape::pic(x = trait, phy = tree)
+
+wrapped_PIC_values = round(wrapped_PIC_values, 2)
+PIC_values = round(PIC_values, 2)
+data.frame(wrapped_PIC_values, PIC_values)
+```
+When comparing the wrapped vs linear PIC values, we can see that while some contrast values are identical, others differ between them. When the contrast values are identical, the minimum distance between the two leaves of the tree was linear. When the contrast values are different, the minimum distance between the two leaves of the tree was wrapped (i.e. passing through the boundary at 0 and 1). 
+
+The wrappedASE function provides a wrapped ancestral state estimation. The ancestral state estimation is done using the independent contrasts, therefore it is the wrapped version of the ace function in ape. 
+
+```{r}
+wrapped_ancestral_states = wrappedASE(trait = trait,
+           phy = tree,
+           lower_bound = 0,
+           upper_bound = 1)
+
+ancestral_states = ape::ace(x = trait, phy = tree, method = "pic")
+ancestral_states = ancestral_states$ace
+
+data.frame(wrapped_ancestral_states, ancestral_states)
+```
+Here we can see that the final ancestral state (first row in the data frame) ends up being different in our wrapped ancestral state estimation compared to the non-wrapped ancestral state estimation.
+
+Finally we will fit a wrapped Brownian Motion model to our data. We will also fit a Brownian Motion model and compare the fits of both models to our dataset. 
+
+```{r}
+wrappedBM_fit = fitWrappedBM(phy = tree, trait = trait, bounds = c(0, 1))
+BM_fit = fitContinuous(phy = tree, dat = trait, model = "BM")
+
+wrappedBM_fit$aic
+BM_fit$opt$aic
+```
+
+Here we can see for our simulated dataset, the wrapped Brownian Motion model has much greater support compared to the Brownian Motion model.
+
