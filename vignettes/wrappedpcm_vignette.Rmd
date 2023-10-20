@@ -51,7 +51,7 @@ In this vignette, we will provide an example for each function.
 First we simulate a tree and trait. The trait will be circular, with values ranging from 0 to 1.
 
 ```{r}
-setseed(3)
+set.seed(3)
 tree = geiger::sim.bdtree(b = 1, d = 0, stop = "taxa", n = 20)
 trait = round(runif(n = 20, min = 0, max = 1), 2)
 names(trait) = tree$tip.label
