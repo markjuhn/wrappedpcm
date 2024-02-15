@@ -34,6 +34,10 @@ fitWrappedBM = function(phy, trait, bounds, bin_number = 50){
     z0 = a_state[a_state[,2] == max(a_state[,2]),1]
     cat("x0 =", z0, "\n")
   }
+  a_state = wrapped_fit$root
+  z0 = a_state[a_state[,2] == max(a_state[,2]),1]
+  wrapped_fit$z0 = z0
+
   print_info_wbm(x = wrapped_fit)
   return(wrapped_fit)
 }
