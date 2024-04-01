@@ -5,6 +5,7 @@
 #' @param phy a phylogenetic tree of class phylo
 #' @param trait data vector for a single trait, with names matching tips in phy
 #' @param bounds range defining bounds of circular space
+#' @param bin_number number of discrete bins used to subdivide the continuous space
 #' @export
 #' @author Florian Boucher and Mark Juhn
 #' @examples
