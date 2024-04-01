@@ -12,6 +12,7 @@
 #' trait = runif(n = 10, min = 0, max = 1)
 #' names(trait) = tree$tip.label
 #' fitWrappedBM(phy = tree, trait = trait, bounds = c(0, 1))
+#'
 fitWrappedBM = function(phy, trait, bounds, bin_number = 50){
   wrapped_likelihood=lnL_BBMV_circular_trait(tree = phy,trait,
                                              bounds = bounds,
