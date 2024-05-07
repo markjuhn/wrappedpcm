@@ -66,7 +66,7 @@ find.mle_FPK_circular_trait=function(model,method='Nelder-Mead',init.optim=NULL,
   if (safe==F){ # only one optimization
     if(is.null(init.optim)==T){init.optim=c(-10,rep(0,model$ncoeff))}
     else{}
-    opt=optim(par=init.optim,fn=model$fun,method=method,control=list(maxit=50000))
+    opt=optim(par=init.optim,fn=model$fun,method=method,control=list(maxit=50000, warn.1d.NelderMead = FALSE))
   }
   else {
     init=c(-10,-1,0) #diffusion Coefficient
