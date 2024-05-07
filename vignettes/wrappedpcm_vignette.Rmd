@@ -87,10 +87,10 @@ data.frame(wrapped_ancestral_states, ancestral_states)
 ```
 Here we can see that the final ancestral state (first row in the data frame) ends up being different in our wrapped ancestral state estimation compared to the non-wrapped ancestral state estimation.
 
-Finally we will fit a wrapped Brownian Motion model to our data. We will also fit a Brownian Motion model and compare the fits of both models to our dataset. 
+Finally we will fit a wrapped Brownian Motion model to our data. We will also fit a Brownian Motion model and compare the fits of both models to our dataset. In the fitwrappedBM, we also will need to specify the bin_number, which is the number of bins we will use to discretize the wrapped space. Here, I will use 50 to speed up the calculation. 
 
 ```{r}
-wrappedBM_fit = fitWrappedBM(phy = tree, trait = trait, bounds = c(0, 1))
+wrappedBM_fit = fitWrappedBM(phy = tree, trait = trait, bounds = c(0, 1), bin_number = 50)
 BM_fit = fitContinuous(phy = tree, dat = trait, model = "BM")
 
 wrappedBM_fit$aic
