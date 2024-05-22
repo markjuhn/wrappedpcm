@@ -99,3 +99,9 @@ BM_fit$opt$aic
 
 Here we can see for our simulated dataset, the wrapped Brownian Motion model has much greater support compared to the Brownian Motion model.
 
+## Note on specifying parameters
+
+When fitting the wrapped Brownian Motion model, there are to user-defined parameters that need to be decided, the bounds and the bin number. The user-defined bounds should be those that match the bounds of the circular dataset. Unlike the bounded Brownian Motion model, these bounds should not be estimated from the empirical range of the data. Instead, the bounds must reflect the actual wrapped bounds of the measurement. 
+
+The bin number should be one that accurately describe the distribution of the data. For computational efficiency, we recommend around 50 to 100 bins, as seen in our supplementary document II, where we plot the log-likelihood against the number of bins.  
+
